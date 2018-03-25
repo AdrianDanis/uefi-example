@@ -1,0 +1,12 @@
+[package]
+name = "uefi-example"
+version = "0.1.0"
+authors = ["Adrian Danis <rambobones@gmail.com>"]
+license = "MIT"
+
+[dependencies]
+uefi = { git = "https://github.com/AdrianDanis/uefi-rs" }
+rlibc = "1.0.0"
+
+[profile.release]
+lto = true

@@ -1,0 +1,5 @@
+[target.uefi-bootloader-x64]
+runner = "./run.sh"
+
+[build]
+target = "uefi-bootloader-x64"
