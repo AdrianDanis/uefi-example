@@ -45,6 +45,17 @@ impl core::fmt::Display for CTEWrap {
     }
 }
 
+struct MemDescWrap(uefi::table::boot::MemoryDescriptor);
+impl core::fmt::Display for MemDescWrap {
+    fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
+        // duplicate so we can create temporaries of the packed fields so that rustc shuts the fuck up
+        let dup = self.0.clone();
+        let ty = dup.ty;
+        let att = dup.att;
+        write!(f, "{} bytes ({} MiB) at {:p} (0x{:p} virtual) of type {:?} and attributes {:?}", self.0.page_count * 4096, self.0.page_count / 256, self.0.phys_start as usize as *mut usize, self.0.virt_start as usize as *mut usize, ty, att)
+    }
+}
+
 pub static mut UEFI_SYSTEM_TABLE: Option<&'static table::SystemTable> = None;
 
 #[no_mangle]
@@ -59,6 +70,20 @@ pub extern "win64" fn UefiMain(_handle: Handle, st: &'static table::SystemTable)
 
 fn loader_main(st: &'static table::SystemTable) -> () {
     println!("Hello world!");
+    let mut all_desc_array: [uefi::table::boot::MemoryDescriptor; 32] = [uefi::table::boot::MemoryDescriptor {
+        ty: uefi::table::boot::MemoryType::Reserved,
+        padding: 0,
+        phys_start: 0,
+        virt_start: 0,
+        page_count: 0,
+        att: uefi::table::boot::MemoryAttribute::empty() }; 32];
+    let mut temp: [u8; 4096] = [0; 4096];
+    let (num_desc, _) = st.boot.get_memory_map(&mut all_desc_array,&mut temp).unwrap();
+    let mem_desc = &all_desc_array[..num_desc];
+    println!("Found initial memory information:");
+    for desc in mem_desc {
+        println!("\t{}", MemDescWrap(*desc));
+    }
     println!("Have configuration values:");
     for config in st.config_table() {
         println!("\t{}", CTEWrap(config));
@@ -66,3 +91,6 @@ fn loader_main(st: &'static table::SystemTable) -> () {
     unimplemented!();
 }
 
+#[no_mangle]
+pub extern "C" fn __chkstk() -> () {
+}

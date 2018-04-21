@@ -5,8 +5,8 @@ authors = ["Adrian Danis <rambobones@gmail.com>"]
 license = "MIT"
 
 [dependencies]
-uefi = { git = "https://github.com/AdrianDanis/uefi-rs" }
 rlibc = "1.0.0"
+uefi = { git = "https://github.com/AdrianDanis/uefi-rs", branch = "memorymap" }
 fencedvar = { path = "fencedvar" }
 
 [profile.release]
