@@ -1,5 +1,6 @@
 #![feature(lang_items)]
 #![feature(compiler_builtins_lib)]
+#![feature(duration_extras)]
 #![no_std]
 #![no_main]
 
@@ -7,6 +8,7 @@ extern crate rlibc;
 extern crate compiler_builtins;
 
 extern crate uefi;
+extern crate fencedvar;
 
 use uefi::{Handle, Status};
 use uefi::table;
@@ -26,6 +28,7 @@ pub extern "win64" fn UefiMain(_handle: Handle, st: &'static table::SystemTable)
     unsafe {
         UEFI_SYSTEM_TABLE = Some(&st);
     }
+    panic::set_panic_action(panic::Action::ShutdownDelay(core::time::Duration::from_secs(1)));
     loader_main();
     Status::Success
 }

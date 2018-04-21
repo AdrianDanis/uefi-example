@@ -7,6 +7,7 @@ license = "MIT"
 [dependencies]
 uefi = { git = "https://github.com/AdrianDanis/uefi-rs" }
 rlibc = "1.0.0"
+fencedvar = { path = "fencedvar" }
 
 [profile.release]
 lto = true

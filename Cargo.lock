@@ -4,6 +4,10 @@ version = "1.0.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
+name = "fencedvar"
+version = "0.1.0"
+
+[[package]]
 name = "rlibc"
 version = "1.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -20,6 +24,7 @@ dependencies = [
 name = "uefi-example"
 version = "0.1.0"
 dependencies = [
+ "fencedvar 0.1.0",
  "rlibc 1.0.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "uefi 0.1.0 (git+https://github.com/AdrianDanis/uefi-rs)",
 ]
