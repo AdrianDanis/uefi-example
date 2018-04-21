@@ -15,7 +15,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 [[package]]
 name = "uefi"
 version = "0.1.0"
-source = "git+https://github.com/AdrianDanis/uefi-rs?branch=memorymap#e18bbb6cfea9d0d02dffc2e4ff4f91ee34e34081"
+source = "git+https://github.com/AdrianDanis/uefi-rs?branch=memorymap#193652ed309243613452a73e792b41801831048c"
 dependencies = [
  "bitflags 1.0.1 (registry+https://github.com/rust-lang/crates.io-index)",
 ]

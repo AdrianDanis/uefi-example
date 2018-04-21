@@ -70,13 +70,8 @@ pub extern "win64" fn UefiMain(_handle: Handle, st: &'static table::SystemTable)
 
 fn loader_main(st: &'static table::SystemTable) -> () {
     println!("Hello world!");
-    let mut all_desc_array: [uefi::table::boot::MemoryDescriptor; 32] = [uefi::table::boot::MemoryDescriptor {
-        ty: uefi::table::boot::MemoryType::Reserved,
-        padding: 0,
-        phys_start: 0,
-        virt_start: 0,
-        page_count: 0,
-        att: uefi::table::boot::MemoryAttribute::empty() }; 32];
+    let mut all_desc_array: [uefi::table::boot::MemoryDescriptor; 32] =
+        [uefi::table::boot::MemoryDescriptor::default(); 32];
     let mut temp: [u8; 4096] = [0; 4096];
     let (num_desc, _) = st.boot.get_memory_map(&mut all_desc_array,&mut temp).unwrap();
     let mem_desc = &all_desc_array[..num_desc];
