@@ -14,8 +14,10 @@ use uefi::table;
 #[macro_use]
 mod print;
 mod panic;
+mod intrinsics;
 
 pub use panic::rust_begin_panic;
+pub use intrinsics::*;
 
 pub static mut UEFI_SYSTEM_TABLE: Option<&'static table::SystemTable> = None;
 
@@ -30,11 +32,6 @@ pub extern "win64" fn UefiMain(_handle: Handle, st: &'static table::SystemTable)
 
 fn loader_main() -> () {
     println!("Hello world!");
-    unimplemented!();
-}
-
-#[no_mangle]
-pub extern "C" fn __floatundisf() {
     unimplemented!();
 }
 
